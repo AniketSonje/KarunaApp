@@ -1,7 +1,10 @@
 package com.karuna.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -46,6 +49,9 @@ public class Receiver extends BaseEntity {
 	
 	@OneToOne(mappedBy = "sender")
 	private Payment payment;
+	
+	@ManyToMany
+	private List<Delivery> deliveryId;
 	
 	
 
