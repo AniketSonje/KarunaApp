@@ -6,11 +6,9 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.karuna.entity.BaseEntity;
 
-
-
-public class DonorRegisterDto{
-	
+public class RegisterReceiverDto extends BaseEntity {
 
 	private String name;
 	private Long phone;
@@ -53,7 +51,10 @@ public class DonorRegisterDto{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public DonorRegisterDto(String name, Long phone, String email, String password, String address) {
+	public RegisterReceiverDto(String name, Long phone,
+			@NotBlank(message = "Email can't be blank!") @Email(message = "Invalid Email Format") @Length(min = 5, max = 20, message = "Invalid Email length!!!!!!!") String email,
+			@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Blank or Invalid Password!!!!") String password,
+			String address) {
 		super();
 		this.name = name;
 		this.phone = phone;
@@ -61,10 +62,16 @@ public class DonorRegisterDto{
 		this.password = password;
 		this.address = address;
 	}
-	public DonorRegisterDto() {
+	public RegisterReceiverDto() {
 		super();
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "RegisterReceiverDto [name=" + name + ", phone=" + phone + ", email=" + email + ", address=" + address
+				+ "]";
+	}
+	public Long getId() {
+		return super.getId();
+	}
+    
 }

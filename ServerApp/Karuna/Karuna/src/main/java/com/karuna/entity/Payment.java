@@ -4,33 +4,52 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
-@Table
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Payment extends BaseEntity {
-	
-	
-	@OneToOne
-	@JoinColumn(name="sender_id")
-	private Receiver sender;
-	
+@Table(name="payment")
+public class Payment extends BaseEntity 
+{
+    
 	@Column(name="payment_date_time")
 	private LocalDateTime paymentDateTime;
-
-	@Column(length=200)
 	private String description;
+	private String status;
+	public LocalDateTime getPaymentDateTime() {
+		return paymentDateTime;
+	}
+	public void setPaymentDateTime(LocalDateTime paymentDateTime) {
+		this.paymentDateTime = paymentDateTime;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Payment(Long id, LocalDateTime paymentDateTime, String description, String status) {
+		super(id);
+		this.paymentDateTime = paymentDateTime;
+		this.description = description;
+		this.status = status;
+	}
+	public Payment() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "Payment [paymentDateTime=" + paymentDateTime + ", description=" + description + ", status=" + status
+				+ "]";
+	}
 	
-	private Boolean status;
+	
+	
+	
+	
 }

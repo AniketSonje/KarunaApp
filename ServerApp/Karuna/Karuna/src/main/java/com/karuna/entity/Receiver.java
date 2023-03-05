@@ -1,5 +1,6 @@
 package com.karuna.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -7,52 +8,145 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Receiver extends BaseEntity {
+@Table(name="receiver")
+public class Receiver extends BaseEntity 
+{
 	
-	@Column(name="receiver_name",length=100)
 	private String name;
 	
-	@Column(nullable = false,unique = true)
+	@NotBlank(message = "Email can't be blank!")
+	@Email(message = "Invalid Email Format")
+	@Length(min = 5,max=20,message = "Invalid Email length!!!!!!!")
 	private String email;
 	
-	@Column(nullable = false)
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String password;
-	
-	@Column(length = 500)
 	private String address;
 	
-	@Column(name="phone",length=13)
-	private Long phone;
+	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})",message = "Blank or Invalid Password!!!!")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 	
+	@Column(name="received_count")
 	private Long receivedCount;
 	
+	@Value("${some.key:false}")
 	private Boolean status;
+	private Long phone;
 	
 	@OneToOne(mappedBy = "receiverId")
-	private Item item;
+	private Item itemId;
 	
-	@OneToOne(mappedBy = "sender")
-	private Payment payment;
-	
-	@ManyToMany
-	private List<Delivery> deliveryId;
-	
-	
+	@ManyToMany(mappedBy = "receivers")
+	private List<Delivery> deliveries=new ArrayList<Delivery>();
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Long getReceivedCount() {
+		return receivedCount;
+	}
+
+	public void setReceivedCount(Long receivedCount) {
+		this.receivedCount = receivedCount;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public Long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
+
+	public Item getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Item itemId) {
+		this.itemId = itemId;
+	}
+
+	public List<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(List<Delivery> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public Receiver(Long id, String name,
+			@NotBlank(message = "Email can't be blank!") @Email(message = "Invalid Email Format") @Length(min = 5, max = 20, message = "Invalid Email length!!!!!!!") String email,
+			String address,
+			@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Blank or Invalid Password!!!!") String password,
+			Long phone) {
+		super(id);
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+		this.phone = phone;
+	}
+
+	public Receiver(Long id) {
+		super(id);
+	}
+
+	@Override
+	public String toString() {
+		return "Receiver [name=" + name + ", email=" + email + ", address=" + address + ", password=" + password
+				+ ", receivedCount=" + receivedCount + ", status=" + status + ", phone=" + phone + ", itemId=" + itemId
+				+ ", deliveries=" + deliveries + "]";
+	}
+
+	
+	
+	
+	
+	
 }

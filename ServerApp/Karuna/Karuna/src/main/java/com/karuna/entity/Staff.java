@@ -1,55 +1,135 @@
 package com.karuna.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
-@Table
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-public class Staff extends BaseEntity {
-	
-	@Column(name="staff_name",length=100)
+@Table(name="staff")
+public class Staff extends BaseEntity 
+{
+
 	private String name;
 	
-	@Column(nullable = false,unique = true)
 	private String email;
 	
-	@Column(nullable = false)
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String password;
-	
-	@Column(length = 500)
 	private String address;
 	
-	@Column(name="phone",length=13)
-	private Long phone; 
-	
-	@ManyToMany(mappedBy = "staffs")
-	private List<Request> requests;
-	
-	@Column(name="staff_role")
-	private Role staffRole;
+	private String password;
 	
 	private Boolean status;
 	
-	@OneToMany(mappedBy = "deliveredBy")
-	private List<Delivery> delivery;
+	private Long phone;
 	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	@OneToMany(mappedBy = "staffId")
+	private List<Delivery> deliveryId=new ArrayList<Delivery>();
+	
+	@ManyToMany(mappedBy = "staffs")
+	private List<Request> requests=new ArrayList<Request>();
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public Long getPhone() {
+		return phone;
+	}
+
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public List<Delivery> getDeliveryId() {
+		return deliveryId;
+	}
+
+	public void setDeliveryId(List<Delivery> deliveryId) {
+		this.deliveryId = deliveryId;
+	}
+
+	public List<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(List<Request> requests) {
+		this.requests = requests;
+	}
+
+	public Staff(Long id, String name, String email, String address, String password, Long phone, Role role) {
+		super(id);
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.password = password;
+		this.phone = phone;
+		this.role = role;
+	}
+
+	public Staff(Long id) {
+		super(id);
+	}
+
+	@Override
+	public String toString() {
+		return "Staff [name=" + name + ", email=" + email + ", address=" + address + ", password=" + password
+				+ ", status=" + status + ", phone=" + phone + ", role=" + role + ", deliveryId=" + deliveryId
+				+ ", requests=" + requests + "]";
+	}
+	
+	
+	
+	
 }

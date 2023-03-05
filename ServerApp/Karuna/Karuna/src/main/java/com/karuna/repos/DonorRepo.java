@@ -1,15 +1,16 @@
 package com.karuna.repos;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.karuna.dto.DonorRegisterDto;
+import com.karuna.dto.RegisterDonorDto;
 import com.karuna.entity.Donor;
 
+public interface DonorRepo extends JpaRepository<Donor, Long> {
 
+	Donor save(RegisterDonorDto donor);
 
-
-public interface DonorRepo extends JpaRepository<Donor,Long> {
-
-	DonorRegisterDto save(DonorRegisterDto donor);
+	Optional<Donor> findByEmailAndPassword(String email, String password);
 
 }

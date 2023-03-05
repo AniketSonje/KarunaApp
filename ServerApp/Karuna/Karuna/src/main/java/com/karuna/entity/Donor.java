@@ -1,51 +1,57 @@
 package com.karuna.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.beans.factory.annotation.Value;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name="donor")
-public class Donor extends BaseEntity {
-    
-	@Column(name="donor_name",length=100)
+public class Donor extends BaseEntity 
+{
+	@Column(length=100)
 	private String name;
 	
-	@Column(name="phone",length=13)
-	private Long phone;
-	
-	@Column(nullable = false,unique = true)
+	@NotBlank(message = "Email can't be blank!")
+	@Email(message = "Invalid Email Format")
+	@Length(min = 5,max=20,message = "Invalid Email length!!!!!!!")
 	private String email;
-	
-	@Column(nullable = false)
-	@JsonProperty(access = Access.WRITE_ONLY)
-	private String password;
-	
-	@Column(length = 500)
 	private String address;
 	
-	@Column(name="status")
-	private Boolean status;
+	@Column(length=13)
+	private Long phone;
+	
+	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})",message = "Blank or Invalid Password!!!!")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
 	
 	@Column(name="donation_count")
-	private Long donationCount; 
+	private Long donationCount;
 	
-	@ManyToMany(mappedBy = "donors")
-	private List<Delivery> delivery;
+	@Value("${some.key:false}")
+	private Boolean status;
 	
+	@OneToMany(mappedBy = "donorId",fetch = FetchType.LAZY)
+	@JsonBackReference
+	private List<Item> items=new ArrayList<Item>();
 	
+	@ManyToMany(mappedBy = "donors",fetch=FetchType.LAZY)
+	@JsonBackReference
+	private List<Delivery> deliveries=new ArrayList<Delivery>();
 
 	public String getName() {
 		return name;
@@ -53,14 +59,6 @@ public class Donor extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Long getPhone() {
-		return phone;
-	}
-
-	public void setPhone(Long phone) {
-		this.phone = phone;
 	}
 
 	public String getEmail() {
@@ -71,14 +69,6 @@ public class Donor extends BaseEntity {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -87,12 +77,20 @@ public class Donor extends BaseEntity {
 		this.address = address;
 	}
 
-	public Boolean getStatus() {
-		return status;
+	public Long getPhone() {
+		return phone;
 	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Long getDonationCount() {
@@ -103,19 +101,46 @@ public class Donor extends BaseEntity {
 		this.donationCount = donationCount;
 	}
 
-	
-
-
-	public Donor(String name, Long phone, String email, String password, String address) {
-		super();
-		this.name = name;
-		this.phone = phone;
-		this.email = email;
-		this.password = password;
-		this.address = address;
+	public Boolean getStatus() {
+		return status;
 	}
 
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
 
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
+
+	public List<Delivery> getDeliveries() {
+		return deliveries;
+	}
+
+	public void setDeliveries(List<Delivery> deliveries) {
+		this.deliveries = deliveries;
+	}
+
+	public Donor(Long id, String name,
+			@NotBlank(message = "Email can't be blank!") @Email(message = "Invalid Email Format") @Length(min = 5, max = 20, message = "Invalid Email length!!!!!!!") String email,
+			String address, Long phone,
+			@Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Blank or Invalid Password!!!!") String password,
+			Long donationCount, Boolean status, List<Item> items, List<Delivery> deliveries) {
+		super(id);
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
+		this.password = password;
+		this.donationCount = donationCount;
+		this.status = status;
+		this.items = items;
+		this.deliveries = deliveries;
+	}
 
 	public Donor() {
 		super();
@@ -123,12 +148,9 @@ public class Donor extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Donor [name=" + name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", address="
-				+ address + "]";
+		return "Donor [name=" + name + ", email=" + email + ", address=" + address + ", phone=" + phone + ",donationCount=" + donationCount + ", status=" + status + ", items=" + items
+				+ ", deliveries=" + deliveries + "]";
 	}
-
-	
-	
 	
 	
 	
