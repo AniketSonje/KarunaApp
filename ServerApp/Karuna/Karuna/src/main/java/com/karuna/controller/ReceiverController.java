@@ -78,14 +78,14 @@ public class ReceiverController {
     	return ResponseEntity.ok(receiverService.viewDonors());
     }
     
-    @GetMapping("/history")
-    public ResponseEntity<?> viewHistory(@PathVariable Receiver receiver){
-    	return ResponseEntity.ok(receiverService.viewHistory(receiver));
+    @GetMapping("/history/{receiverId}")
+    public ResponseEntity<?> viewHistory(@PathVariable Long receiverId){
+    	return ResponseEntity.ok(receiverService.viewHistory(receiverId));
     }
     
-    @PutMapping("/accept")
-    public ResponseEntity<?> acceptItem(@PathVariable Item item){
-    	return ResponseEntity.ok(receiverService.receive(item));
+    @PutMapping("/{itemId}")
+    public ResponseEntity<?> acceptItem(@PathVariable Long itemId){
+    	return ResponseEntity.ok(receiverService.receive(itemId));
     }
     
     @GetMapping("/logout")

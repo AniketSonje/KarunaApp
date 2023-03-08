@@ -15,10 +15,15 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="receiver")
+@NoArgsConstructor
 public class Receiver extends BaseEntity 
 {
 	
@@ -46,6 +51,7 @@ public class Receiver extends BaseEntity
 	private Item itemId;
 	
 	@ManyToMany(mappedBy = "receivers")
+	@JsonBackReference
 	private List<Delivery> deliveries=new ArrayList<Delivery>();
 
 	public String getName() {
@@ -133,8 +139,8 @@ public class Receiver extends BaseEntity
 		this.phone = phone;
 	}
 
-	public Receiver(Long id) {
-		super(id);
+	public Receiver() {
+		super();
 	}
 
 	@Override

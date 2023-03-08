@@ -10,8 +10,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.NoArgsConstructor;
+
 @Entity
 @Table(name="staff")
+@NoArgsConstructor
 public class Staff extends BaseEntity 
 {
 
@@ -118,8 +121,8 @@ public class Staff extends BaseEntity
 		this.role = role;
 	}
 
-	public Staff(Long id) {
-		super(id);
+	public Staff() {
+		super();
 	}
 
 	@Override

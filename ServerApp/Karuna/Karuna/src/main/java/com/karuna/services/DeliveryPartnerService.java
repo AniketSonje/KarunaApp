@@ -2,6 +2,7 @@ package com.karuna.services;
 
 import java.util.List;
 
+import com.karuna.dto.LoginDto;
 import com.karuna.entity.Donor;
 import com.karuna.entity.Receiver;
 import com.karuna.entity.Request;
@@ -9,9 +10,9 @@ import com.karuna.entity.Staff;
 
 public interface DeliveryPartnerService {
 	
-	Staff login(String email,String password);
+	Staff login(LoginDto loginDto);
 	
-	List<Request> viewRequests(Boolean status);
+	List<Request> viewRequests();
 	 
 	 String viewLocationOfDonor(Donor donor);
 	 
@@ -19,7 +20,9 @@ public interface DeliveryPartnerService {
 	 
 	 Boolean checkPaymentStatus();
 	 
-	 void logout();
+	 String logout(Long staffId);
+	 
+	 Boolean handleRequest(Long reqId);
 	 
 
 }

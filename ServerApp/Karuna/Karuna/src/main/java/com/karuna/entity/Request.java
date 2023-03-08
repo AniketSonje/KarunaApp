@@ -21,7 +21,7 @@ public class Request extends BaseEntity
 	private String description;
 	
 	
-	private String status;
+	private Boolean status;
 	
 	@Enumerated(EnumType.STRING)
 	private Type type;
@@ -37,4 +37,59 @@ public class Request extends BaseEntity
 			  joinColumns = @JoinColumn(name = "staff_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "request_id"))
 	private List<Staff> staffs=new ArrayList<Staff>();
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public Receiver getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(Receiver receiver) {
+		this.receiver = receiver;
+	}
+
+	public List<Staff> getStaffs() {
+		return staffs;
+	}
+
+	public void setStaffs(List<Staff> staffs) {
+		this.staffs = staffs;
+	}
+
+	public Request(Long id, String description, Boolean status, Type type, Receiver receiver, List<Staff> staffs) {
+		super(id);
+		this.description = description;
+		this.status = status;
+		this.type = type;
+		this.receiver = receiver;
+		this.staffs = staffs;
+	}
+
+	public Request() {
+		super();
+	}
+	
+	
 }

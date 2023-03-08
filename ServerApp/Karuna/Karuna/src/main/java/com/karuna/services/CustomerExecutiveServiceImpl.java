@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.karuna.dto.AddCampaignDto;
+import com.karuna.dto.LoginDto;
 import com.karuna.entity.Campaign;
 import com.karuna.entity.Request;
 import com.karuna.entity.Staff;
@@ -41,18 +42,13 @@ public class CustomerExecutiveServiceImpl implements CustomerExecutiveService {
 	    @Autowired
 		private ModelMapper mapper;
 
-	@Override
-	public Staff login(String email, String password) {
-	      Staff staff=staffRepo.findByEmail(email);
-		if(staff!=null && password.matches(staff.getPassword())){
-			return staff;
+	    @Override
+		public Staff login(LoginDto loginDto) {
+			Staff staff= staffRepo.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
+					.orElseThrow(() -> new ResourceNotFoundException("Bad Credentials !!!!!"));
+			staff.setStatus(true);
+			return mapper.map(staff, Staff.class);
 		}
-		else {
-			throw new ResourceNotFoundException("Invalid email or Password");
-		}
-		
-		
-	}
 
 	@Override
 	public List<Request> viewRequests(Boolean status) {
@@ -101,9 +97,19 @@ public class CustomerExecutiveServiceImpl implements CustomerExecutiveService {
 	}
 
 	@Override
-	public void logout() {
-	  
+	public String logout(Long staffId) {
+		staffRepo.findById(staffId).orElseThrow().setStatus(false);
+		
+	  return "Successfully Logged Out!!!";
 		
 	}
+	
+
+	@Override
+	public Boolean handleRequest(Long requestId) {
+		reqRepo.findById(requestId).orElseThrow().setStatus(true);
+		return true;
+	}
+	
 
 }

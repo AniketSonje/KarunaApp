@@ -63,15 +63,15 @@ public class ReceiverServiceImpl implements ReceiverService {
 	}
 
 	@Override
-	public Item receive(Item item) {
-		if(itemRepo.existsById(item.getId())) {
+	public Item receive(Long itemId) {
+		Item item=itemRepo.findById(itemId).orElseThrow();
 			item.setStatus(true);
 			item.setAcceptedDateTime(LocalDateTime.now());
 			return item;
 		}
-		return null;
+	
 		
-	}
+	
 
 	@Override
 	public String logout(LogoutDto logoutDto) {
@@ -99,9 +99,9 @@ public class ReceiverServiceImpl implements ReceiverService {
 	}
 
 	@Override
-	public List<Item> viewHistory(Receiver receiver) {
-		if(donorRepo.existsById(receiver.getId())) {
-			return itemRepo.findAllByReceiverId(receiver);
+	public List<Item> viewHistory(Long receiverId) {
+		if(donorRepo.existsById(receiverId)) {
+			return itemRepo.findAllByReceiverId(receiverId);
 		}
 		return null;
 	}

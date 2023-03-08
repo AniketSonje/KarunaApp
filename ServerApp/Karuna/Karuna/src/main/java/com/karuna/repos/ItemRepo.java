@@ -15,10 +15,10 @@ public interface ItemRepo extends JpaRepository<Item, Long> {
 
 	
 
-	List<Item> findAllByDonorId(Donor donor);
+	List<Item> findAllByDonorId(Long donorId);
 
 
 
-	List<Item> findAllByReceiverId(Receiver receiver);
+	List<Item> findAllByReceiverId(Long receiverId);
 
 }

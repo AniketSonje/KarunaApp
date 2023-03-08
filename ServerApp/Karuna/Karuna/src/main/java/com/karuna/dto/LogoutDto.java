@@ -1,5 +1,7 @@
 package com.karuna.dto;
 
-public class LogoutDto {
+import com.karuna.entity.BaseEntity;
+
+public class LogoutDto{
 
 }

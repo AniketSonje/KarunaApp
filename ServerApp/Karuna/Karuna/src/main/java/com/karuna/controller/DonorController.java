@@ -69,9 +69,9 @@ public class DonorController {
     	return ResponseEntity.ok(donorService.viewReceivers());
     }
     
-    @GetMapping("/history")
-    public ResponseEntity<?> viewHistory(@PathVariable Donor donor){
-    	return ResponseEntity.ok(donorService.viewHistory(donor));
+    @GetMapping("/history/{donorId}")
+    public ResponseEntity<?> viewHistory(@PathVariable Long donorId){
+    	return ResponseEntity.ok(donorService.viewHistory(donorId));
     }
     
     @GetMapping("/logout")

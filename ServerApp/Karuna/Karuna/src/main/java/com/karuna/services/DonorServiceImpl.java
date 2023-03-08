@@ -95,9 +95,9 @@ public class DonorServiceImpl implements DonorService {
 	}
 
 	@Override
-	public List<Item> viewHistory(Donor donor) {
-		if(donorRepo.existsById(donor.getId())) {
-			return itemRepo.findAllByDonorId(donor);
+	public List<Item> viewHistory(Long donorId) {
+		if(donorRepo.existsById(donorId)) {
+			return itemRepo.findAllByDonorId(donorId);
 		}
 		return null;
 	}

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -44,6 +45,7 @@ public class Delivery extends BaseEntity
 			  name = "delivery_receiver_handling", 
 			  joinColumns = @JoinColumn(name = "receiver_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "delivery_id"))
+	@JsonManagedReference
 	private List<Receiver> receivers=new ArrayList<Receiver>();
 	
 	

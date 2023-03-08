@@ -17,7 +17,7 @@ public interface ReceiverService {
 	
 	Receiver login(LoginDto loginDto);
 	
-	Item receive(Item item);
+	Item receive(Long itemId);
 	
 	String logout(LogoutDto logoutDto);
 	
@@ -27,7 +27,7 @@ public interface ReceiverService {
 
 	List<Item> viewItems();
 	
-	List<Item> viewHistory(Receiver receiver);
+	List<Item> viewHistory(Long receiverId);
 	
 	List<Donor> viewDonors();
 	

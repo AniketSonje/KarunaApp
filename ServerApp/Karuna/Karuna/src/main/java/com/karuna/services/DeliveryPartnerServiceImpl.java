@@ -2,9 +2,13 @@ package com.karuna.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.karuna.dto.LoginDto;
 import com.karuna.entity.Donor;
 import com.karuna.entity.Receiver;
 import com.karuna.entity.Request;
@@ -16,6 +20,9 @@ import com.karuna.repos.ReceiverRepo;
 import com.karuna.repos.RequestRepo;
 import com.karuna.repos.StaffRepo;
 
+
+@Service
+@Transactional
 public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
 	
 	  @Autowired
@@ -37,20 +44,17 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
 	    @Autowired
 	    private PaymentRepo paymentRepo;
 
+	    @Override
+		public Staff login(LoginDto loginDto) {
+			Staff staff= staffRepo.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword())
+					.orElseThrow(() -> new ResourceNotFoundException("Bad Credentials !!!!!"));
+			staff.setStatus(true);
+			return mapper.map(staff, Staff.class);
+		}
 
 	@Override
-	public Staff login(String email, String password) {
-		 Staff staff=staffRepo.findByEmail(email);
-			if(staff!=null && password.matches(staff.getPassword())){
-				return staff;
-			}
-			else {
-				throw new ResourceNotFoundException("Invalid email or Password");
-			}
-	}
-
-	@Override
-	public List<Request> viewRequests(Boolean status) {
+	public List<Request> viewRequests() {
+		Boolean status=false;
 		return reqRepo.findAllByStatus(status);
 
 	}
@@ -77,9 +81,18 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
 	}
 
 	@Override
-	public void logout() {
-		// TODO Auto-generated method stub
+	public String logout(Long staffId) {
+		staffRepo.findById(staffId).orElseThrow().setStatus(false);
+		return "Successfully Logged Out !!!";
 		
 	}
+
+	@Override
+	public Boolean handleRequest(Long reqId) {
+		reqRepo.findById(reqId).orElseThrow().setStatus(true);
+		return true;
+	}
+	
+	
 
 }

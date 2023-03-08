@@ -29,5 +29,5 @@ public interface DonorService {
 	
 	List<Receiver> viewReceivers();
 
-	List<Item> viewHistory(Donor donor);
+	List<Item> viewHistory(Long donorId);
 }
