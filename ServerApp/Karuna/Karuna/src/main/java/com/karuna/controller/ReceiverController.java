@@ -88,9 +88,9 @@ public class ReceiverController {
     	return ResponseEntity.ok(receiverService.receive(itemId));
     }
     
-    @GetMapping("/logout")
-    public ResponseEntity<?> logOut(@PathVariable LogoutDto logOutDto){
-    	return ResponseEntity.ok(receiverService.logout(logOutDto));
+    @GetMapping("/logout/{receiverId}")
+    public ResponseEntity<?> logOut(@PathVariable Long receiverId){
+    	return ResponseEntity.ok(receiverService.logout(receiverId));
     }
 
 }

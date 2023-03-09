@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.annotation.CreatedDate;
 
 @Entity
 @Table(name="campaign")
@@ -14,12 +15,15 @@ public class Campaign extends BaseEntity
 {
     
 	@Column(name="campaign_date_time")
+	@CreatedDate
 	private LocalDateTime campaignDateTime;
 	private String name;
 	private String description;
 	
 	@Value("${some.key:true}")
 	private Boolean status;
+	
+	
 	public LocalDateTime getCampaignDateTime() {
 		return campaignDateTime;
 	}

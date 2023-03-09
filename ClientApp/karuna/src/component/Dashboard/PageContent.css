@@ -1,0 +1,26 @@
+.menu{
+    background-color: ivory;
+    color: rgb(190, 120, 22);
+    border: solid 1px;
+    height: 100%;
+    width: 100%;
+    
+}
+
+.btnmenu{
+    color: rgb(251, 250, 247);
+    border: solid 1px;
+    width: 100%;
+}
+
+.pagecontent{
+    display: flex;
+}
+
+.cards{
+    display: flex;
+    align-content: center;
+    align-self: center;
+    -ms-flex-align: center;
+    -ms-grid-column-align: end;
+}

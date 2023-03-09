@@ -15,7 +15,7 @@ public interface DonorService {
 
 	Donor registerDonor(RegisterDonorDto donor);
 	
-	List<Campaign> viewCampaign(Boolean status);
+	List<Campaign> viewCampaign();
 	
 	Donor updateDonor(RegisterDonorDto updatedDonor);
 	
@@ -23,7 +23,7 @@ public interface DonorService {
 	
 	Item donate(ItemDto item);
 	
-	String logout(LogoutDto logoutDto);
+	String logout(Long donorId);
 	
 	String deleteAccount(Long donorId);
 	

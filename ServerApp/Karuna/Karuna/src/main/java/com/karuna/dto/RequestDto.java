@@ -1,13 +1,27 @@
 package com.karuna.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
 import com.karuna.entity.BaseEntity;
+import com.karuna.entity.Type;
 
 public class RequestDto extends BaseEntity{
 	
     private String description;
-	
-	
-	private String status;
+    
+    @Enumerated(EnumType.STRING)
+	private Type type;
+
+
+	public Type getType() {
+		return type;
+	}
+
+
+	public void setType(Type type) {
+		this.type = type;
+	}
 
 
 	public String getDescription() {
@@ -20,20 +34,13 @@ public class RequestDto extends BaseEntity{
 	}
 
 
-	public String getStatus() {
-		return status;
-	}
+	
 
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-
-	public RequestDto(Long id, String description, String status) {
+	public RequestDto(Long id, String description) {
 		super(id);
 		this.description = description;
-		this.status = status;
+
 	}
 
 
@@ -44,7 +51,7 @@ public class RequestDto extends BaseEntity{
 
 	@Override
 	public String toString() {
-		return "RequestDto [description=" + description + ", status=" + status + "]";
+		return "RequestDto [description=" + description +"]";
 	}
 	
 	

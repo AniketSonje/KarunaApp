@@ -74,8 +74,9 @@ public class ReceiverServiceImpl implements ReceiverService {
 	
 
 	@Override
-	public String logout(LogoutDto logoutDto) {
-		return null;
+	public String logout(Long receiverId) {
+		receiverRepo.findById(receiverId).orElseThrow().setStatus(false);
+		return "Logged Out !!!";
 	}
 
 	@Override
@@ -112,9 +113,11 @@ public class ReceiverServiceImpl implements ReceiverService {
 	}
 
 	@Override
-	public Request createRequest(RequestDto request) {
-		// TODO Auto-generated method stub
-		return null;
+	public Request createRequest(RequestDto requestDto) {
+		Request request=mapper.map(requestDto, Request.class);
+		request.setReceiver(request.getReceiver());
+	
+		return reqRepo.save(request);
 	}
 
 }

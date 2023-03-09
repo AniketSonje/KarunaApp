@@ -14,7 +14,7 @@ public class Payment extends BaseEntity
 	@Column(name="payment_date_time")
 	private LocalDateTime paymentDateTime;
 	private String description;
-	private String status;
+	private Boolean status;
 	public LocalDateTime getPaymentDateTime() {
 		return paymentDateTime;
 	}
@@ -27,13 +27,13 @@ public class Payment extends BaseEntity
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getStatus() {
+	public Boolean getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	public Payment(Long id, LocalDateTime paymentDateTime, String description, String status) {
+	public Payment(Long id, LocalDateTime paymentDateTime, String description, Boolean status) {
 		super(id);
 		this.paymentDateTime = paymentDateTime;
 		this.description = description;

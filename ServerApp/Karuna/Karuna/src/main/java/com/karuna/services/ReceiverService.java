@@ -19,7 +19,7 @@ public interface ReceiverService {
 	
 	Item receive(Long itemId);
 	
-	String logout(LogoutDto logoutDto);
+	String logout(Long receiverId);
 	
 	String deleteAccount(Long receiverId);
 	

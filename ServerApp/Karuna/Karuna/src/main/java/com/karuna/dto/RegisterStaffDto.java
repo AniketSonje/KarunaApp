@@ -1,5 +1,7 @@
 package com.karuna.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -7,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 import com.karuna.entity.BaseEntity;
+import com.karuna.entity.Role;
 
 public class RegisterStaffDto extends BaseEntity{
 
@@ -21,6 +24,16 @@ public class RegisterStaffDto extends BaseEntity{
 	@Pattern(regexp="((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})",message = "Blank or Invalid Password!!!!")
 	private String password;
 	private String address;
+	
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
 	public String getName() {
 		return name;
 	}

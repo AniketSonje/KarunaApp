@@ -2,14 +2,16 @@ package com.karuna.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.karuna.dto.AddCampaignDto;
 import com.karuna.dto.LoginDto;
 import com.karuna.dto.RegisterStaffDto;
 import com.karuna.entity.Campaign;
-import com.karuna.entity.Donor;
 import com.karuna.entity.Request;
 import com.karuna.entity.Staff;
 import com.karuna.exception.ResourceNotFoundException;
@@ -20,6 +22,8 @@ import com.karuna.repos.ReceiverRepo;
 import com.karuna.repos.RequestRepo;
 import com.karuna.repos.StaffRepo;
 
+@Service
+@Transactional
 public class AdminServiceImpl implements AdminService {
 	
 	  @Autowired
@@ -52,60 +56,7 @@ public class AdminServiceImpl implements AdminService {
 		return mapper.map(staff, Staff.class);
 	}
 
-	@Override
-	public List<Request> viewRequests(Boolean status) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Campaign addCampaign(Campaign campaign) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteCampaign(Long campaignId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String removeDonor(Long donorId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String removeReceiver(Long receiverId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Campaign updateCampaign(AddCampaignDto newCampaign) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Staff addStaff(RegisterStaffDto newStaff) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Staff updateStaff(RegisterStaffDto updatedStaff) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String deleteStaff(Long staffId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public String logout(Long staffId) {
 		staffRepo.findById(staffId).orElseThrow().setStatus(false);
@@ -115,26 +66,102 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Staff> viewStaffs() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return staffRepo.findAll();
 	}
 
-	@Override
-	public String viewLocationOfDonor() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public String viewLocationOfReceiver() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Request> viewRequests() {
+		Boolean status=false;
+		return reqRepo.findAllByStatus(status);
 	}
 
+
 	@Override
-	public Boolean checkPaymentStatus() {
-		// TODO Auto-generated method stub
-		return null;
+	public Campaign addCampaign(AddCampaignDto campaignDto) {
+		return campaignRepo.save(campaignDto);
 	}
+
+	
+	@Override
+	public String deleteCampaign(Long campaignId) {
+		campaignRepo.deleteById(campaignId);
+		return "Campaign Deleted !!!!";
+	}
+
+
+	@Override
+	public String removeDonor(Long donorId) {
+		donorRepo.deleteById(donorId);
+		return "Donor Deleted!!!";
+	}
+
+
+	@Override
+	public String removeReceiver(Long receiverId) {
+		receiverRepo.deleteById(receiverId);
+		return "Receiver Deleted!!!";
+	}
+
+
+	@Override
+	public Campaign updateCampaign(AddCampaignDto updatedCampaign) {
+		 Campaign campaign=mapper.map(updatedCampaign,Campaign.class);     
+			if(campaignRepo.existsById(updatedCampaign.getId())) {
+	    	   return campaignRepo.save(campaign);
+	       }
+			return null;
+	}
+
+
+	@Override
+	public Staff addStaff(RegisterStaffDto newStaff) {
+		Staff staff=mapper.map(newStaff, Staff.class);
+		
+		return staffRepo.save(staff);
+	}
+
+
+	@Override
+	public Staff updateStaff(RegisterStaffDto updatedStaff) {
+		 Staff staff=mapper.map(updatedStaff,Staff.class);     
+			if(staffRepo.existsById(updatedStaff.getId())) {
+	    	   return staffRepo.save(staff);
+	       }
+			return null;
+		
+	}
+
+
+	@Override
+	public String deleteStaff(Long staffId) {
+	
+		staffRepo.deleteById(staffId);
+		return "Staff Deleted";
+	}
+
+
+	@Override
+	public String viewLocationOfDonor(Long donorId) {
+		return donorRepo.findById(donorId).orElseThrow().getAddress();
+		
+	}
+
+
+	@Override
+	public String viewLocationOfReceiver(Long receiverid) {
+		return receiverRepo.findById(receiverid).orElseThrow().getAddress();
+		
+	}
+
+
+	@Override
+	public Boolean checkPaymentStatus(Long paymentId) {
+		
+		return paymentRepo.findById(paymentId).orElseThrow().getStatus();
+	}
+
+	
 
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -45,6 +46,7 @@ public class Receiver extends BaseEntity
 	
 	@Value("${some.key:false}")
 	private Boolean status;
+	
 	private Long phone;
 	
 	@OneToOne(mappedBy = "receiverId")
@@ -53,6 +55,9 @@ public class Receiver extends BaseEntity
 	@ManyToMany(mappedBy = "receivers")
 	@JsonBackReference
 	private List<Delivery> deliveries=new ArrayList<Delivery>();
+	
+	@OneToMany(mappedBy="receiver")
+	private List<Request> requests=new ArrayList<Request>();
 
 	public String getName() {
 		return name;

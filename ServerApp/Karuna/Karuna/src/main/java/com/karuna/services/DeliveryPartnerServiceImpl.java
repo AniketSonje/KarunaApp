@@ -60,24 +60,20 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
 	}
 
 	@Override
-	public String viewLocationOfDonor(Donor donor) {
-		if(donorRepo.existsById(donor.getId())) {
-			return donor.getAddress();
-		}
-		return "Donor does not exist";
+	public String viewLocationOfDonor(Long donorId) {
+		return donorRepo.findById(donorId).orElseThrow().getAddress();
+		
 	}
 
 	@Override
-	public String viewLocationOfReceiver(Receiver receiver) {
-	   if(receiverRepo.existsById(receiver.getId())) {
-		   return receiver.getAddress();
-	   }
-	   return "Receiver does not exist";
+	public String viewLocationOfReceiver(Long receiverId) {
+		return receiverRepo.findById(receiverId).orElseThrow().getAddress();
+	  
 	}
 
 	@Override
-	public Boolean checkPaymentStatus() {
-		return true;
+	public Boolean checkPaymentStatus(Long paymentId) {
+		return paymentRepo.findById(paymentId).orElseThrow().getStatus();
 	}
 
 	@Override

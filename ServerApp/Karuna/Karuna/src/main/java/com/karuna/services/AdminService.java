@@ -13,9 +13,9 @@ public interface AdminService {
 	
 	 Staff login(LoginDto loginDto);
 	    
-	    List<Request> viewRequests(Boolean status);
+	    List<Request> viewRequests();
     	    
-	    Campaign addCampaign(Campaign campaign);
+	    Campaign addCampaign(AddCampaignDto campaignDto);
 	    
 	    String deleteCampaign(Long campaignId);
 	    
@@ -31,11 +31,11 @@ public interface AdminService {
 	    
 	    String deleteStaff(Long staffId);
 	    
-	    String viewLocationOfDonor();
+	    String viewLocationOfDonor(Long donorId);
 		 
-		 String viewLocationOfReceiver();
+		 String viewLocationOfReceiver(Long receiverid);
 		 
-		 Boolean checkPaymentStatus();
+		 Boolean checkPaymentStatus(Long paymentId);
 	    
 	    String logout(Long staffId);
 	    

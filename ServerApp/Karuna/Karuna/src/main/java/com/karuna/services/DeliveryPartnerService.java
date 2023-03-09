@@ -14,11 +14,11 @@ public interface DeliveryPartnerService {
 	
 	List<Request> viewRequests();
 	 
-	 String viewLocationOfDonor(Donor donor);
+	 String viewLocationOfDonor(Long donorId);
 	 
-	 String viewLocationOfReceiver(Receiver receiver);
+	 String viewLocationOfReceiver(Long receiverId);
 	 
-	 Boolean checkPaymentStatus();
+	 Boolean checkPaymentStatus(Long paymentId);
 	 
 	 String logout(Long staffId);
 	 

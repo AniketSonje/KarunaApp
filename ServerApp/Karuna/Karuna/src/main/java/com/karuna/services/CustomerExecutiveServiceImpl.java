@@ -60,6 +60,7 @@ public class CustomerExecutiveServiceImpl implements CustomerExecutiveService {
 	@Override
 	public Campaign addCampaign(AddCampaignDto newCampaign) {
 		 Campaign campaign=mapper.map(newCampaign, Campaign.class);
+		 campaign.setStatus(true);
 		return campaignRepo.save(campaign);
 		
 	}
@@ -68,6 +69,7 @@ public class CustomerExecutiveServiceImpl implements CustomerExecutiveService {
 	public Campaign updateCampaign(AddCampaignDto updatedCampaign) {
 	      Campaign campaign=mapper.map(updatedCampaign, Campaign.class);
 	      if(campaignRepo.existsById(updatedCampaign.getId())) {
+	    	  campaign.setStatus(true);
 	    	  return campaignRepo.save(campaign);
 	      }
 	      return null;

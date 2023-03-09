@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Entity
 @Table(name="Request")
 public class Request extends BaseEntity 
@@ -21,6 +23,7 @@ public class Request extends BaseEntity
 	private String description;
 	
 	
+	@Value("${some.key:false}")
 	private Boolean status;
 	
 	@Enumerated(EnumType.STRING)
@@ -33,7 +36,7 @@ public class Request extends BaseEntity
 	
 	@ManyToMany
 	@JoinTable(
-			  name = "reques_handling", 
+			  name = "request_handling", 
 			  joinColumns = @JoinColumn(name = "staff_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "request_id"))
 	private List<Staff> staffs=new ArrayList<Staff>();

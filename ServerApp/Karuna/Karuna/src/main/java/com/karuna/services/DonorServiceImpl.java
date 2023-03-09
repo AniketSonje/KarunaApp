@@ -54,7 +54,8 @@ public class DonorServiceImpl implements DonorService {
 	}
 
 	@Override
-	public List<Campaign> viewCampaign(Boolean status) {
+	public List<Campaign> viewCampaign() {
+		Boolean status=true;
 		return campaignRepo.findAllByStatus(status);
 		
 		
@@ -75,8 +76,9 @@ public class DonorServiceImpl implements DonorService {
 	}
 
 	@Override
-	public String logout(LogoutDto logoutDto) {
-		return null;
+	public String logout(Long donorId) {
+		donorRepo.findById(donorId).orElseThrow().setStatus(false);
+		return "Logged Out!!!!";
 	}
 
 	@Override

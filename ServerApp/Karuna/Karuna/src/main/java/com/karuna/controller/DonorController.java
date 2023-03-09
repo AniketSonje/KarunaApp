@@ -39,9 +39,8 @@ public class DonorController {
     }
     
     @GetMapping("/campaigns")
-    public ResponseEntity<?> viewCampaign(@PathVariable Boolean status){
-    	status=true;
-    	return ResponseEntity.ok(donorService.viewCampaign(status));
+    public ResponseEntity<?> viewCampaign(){
+    	return ResponseEntity.ok(donorService.viewCampaign());
     }
     
     @DeleteMapping("/{donorId}")
@@ -74,8 +73,8 @@ public class DonorController {
     	return ResponseEntity.ok(donorService.viewHistory(donorId));
     }
     
-    @GetMapping("/logout")
-    public ResponseEntity<?> logOut(@PathVariable LogoutDto logOutDto){
-    	return ResponseEntity.ok(donorService.logout(logOutDto));
+    @GetMapping("/{donorId}")
+    public ResponseEntity<?> logOut(@PathVariable Long donorId){
+    	return ResponseEntity.ok(donorService.logout(donorId));
     }
 }

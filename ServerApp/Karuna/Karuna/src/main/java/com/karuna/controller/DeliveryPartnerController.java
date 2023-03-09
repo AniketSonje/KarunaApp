@@ -35,14 +35,14 @@ public class DeliveryPartnerController {
 		return ResponseEntity.ok(delService.viewRequests());
 	}
 	
-	@GetMapping("/donor_location")
-	public ResponseEntity<?> viewDonorLocation(@PathVariable Donor donor){
-		return ResponseEntity.ok(delService.viewLocationOfDonor(donor));
+	@GetMapping("/donor_location/{donorId}")
+	public ResponseEntity<?> viewDonorLocation(@PathVariable Long donorId){
+		return ResponseEntity.ok(delService.viewLocationOfDonor(donorId));
 	}
 	
-	@GetMapping("/receiver_location")
-	public ResponseEntity<?> viewReceiverLocation(@PathVariable Receiver receiver){
-		return ResponseEntity.ok(delService.viewLocationOfReceiver(receiver));
+	@GetMapping("/receiver_location/{receiverId}")
+	public ResponseEntity<?> viewReceiverLocation(@PathVariable Long receiverId){
+		return ResponseEntity.ok(delService.viewLocationOfReceiver(receiverId));
 	}
 	
 	@GetMapping("/{reqId}")
